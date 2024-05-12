@@ -1,0 +1,1 @@
+cmake -DBOX2D_BUILD_DOCS=ON -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/packages" ..
