@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <Box2D/Box2D.h>
 
-const float kGravity = 43.5f; // Gravity value in m/s^2
-
-//g++ -I "C:/Program Files (x86)/box2d/include" -I C:/lib/glfw-3.4/include -I C:/lib/glad/include -L "C:/Program Files (x86)/box2d/build/bin" main.cpp -lbox2d -lglfw -lglad
+//g++ -I "ruta al box2d/include" -L "ruta al/box2d/build/bin" main.cpp -lbox2d
 int main(int argc, char **argv)
 {
     // gravity magnitude 
