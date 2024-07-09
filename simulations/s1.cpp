@@ -1,6 +1,6 @@
 /*
 S1: Simulacion de una bola rebotando con restitucion 0
-@author Liana
+@author: Liana
 */
 
 #include <Box2D/Box2D.h>
