@@ -7,6 +7,7 @@ Implementations of lib.h
 
 void write(std::ofstream &output, const char *fmt...)
 {
+    output << std::fixed << std::setprecision(10);
     va_list args;
     va_start(args, fmt);
     while (*fmt != '\0')
@@ -21,6 +22,12 @@ void write(std::ofstream &output, const char *fmt...)
             double d = va_arg(args, double);
             output << d << "\t";
         }
+        else if (*fmt == 'd')
+        {
+            double d = va_arg(args, int);
+            output << d << "\t";
+        }
+        
         ++fmt;
     }
     output << "\n";
@@ -66,7 +73,6 @@ void init(W *w, std::map<std::string, float> v)
     w->y0 = isNull(v["y0"], WORLD_YPOS);
     w->width = isNull(v["width"], WORLD_WIDTH);
     w->height = isNull(v["height"], WORLD_HEIGHT);
-    //printf("W* updated successfully\n");
 }
 
 void init(B *b, std::map<std::string, float> v)
@@ -79,5 +85,4 @@ void init(B *b, std::map<std::string, float> v)
     b->radius = isNull(v["radius"], RADIUS);
     b->xcenter = isNull(v["xcenter"], XCENTER);
     b->ycenter = isNull(v["ycenter"], YCENTER);
-    //printf("B* updated successfully\n");
 }
