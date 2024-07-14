@@ -5,14 +5,14 @@ S1: Implementacion modularizada de simulacion 1
 #include "lib.h"
 
 int main(int argc, char** argv) {
-    bool EXEC = validate_params(2, argc); // Verify if every expected param was included into console execution
-    if(!EXEC) return EXIT_FAILURE; // Exit if something's missing
+    bool EXEC = validate_params(2, argc);
+    if(!EXEC) return EXIT_FAILURE;
 
     // Restoring data from config files
     std::map<std::string, float> wc = fetch(argv[1]), bc = fetch(argv[2]);
-    W w{}; B b0{}; // Create config structs
-    init(&w, wc); // Load world data
-    init(&b0, bc); // Load ball data
+    W w{}; B b0{};
+    init(&w, wc);
+    init(&b0, bc);
 
     // Create world instance
     b2Vec2 gravity(w.gx, w.gy);
@@ -26,14 +26,15 @@ int main(int argc, char** argv) {
     groundBox.SetAsBox(w.width, w.height);
     groundBody->CreateFixture(&groundBox, WORLD_DENSITY);
 
-    b2BallObject* ball0 = new b2BallObject(world, &b0); // Create a new dynamic ball without configure it manually
+    b2BallObject* ball0 = new b2BallObject(world, &b0);
    
     /* SimulationHandler handles the entire simulation (for loop) 
     and params can be skipped (because of default values) */
     SimulationHandler* sh = new SimulationHandler();
-    std::ofstream outFile("b0_data.txt"); // Instance to write in file
-    sh->single_loop(world, ball0->ball, outFile, true); // Performance simulation
-    outFile.close(); // Closing file instance
+    // Instance to write in file
+    std::ofstream outFile("b0_data.txt");
+    sh->simulation_one(world, ball0->ball, outFile, true);
+    outFile.close();
 
     return EXIT_SUCCESS;
 }
