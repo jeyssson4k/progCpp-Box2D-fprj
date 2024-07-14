@@ -108,17 +108,22 @@ public:
         this->velocityIterations = v_iterations;
         this->positionIterations = pos_iterations;
     }
-    void single_loop(b2World &world, b2Body *ball, std::ofstream &output, bool showOutputInConsole)
+    void simulation_one(b2World &world, b2Body *ball, std::ofstream &output, bool showOutputInConsole)
     {
-        write(output, "ssss", "t", "x", "y", "r");
+        write(output, "sssss", "t", "y", "vy", "k", "pe");
         for (int t = 0; t < this->frames; ++t)
         {
             world.Step(this->timeStep, this->velocityIterations, this->positionIterations);
+            const b2Vec2 g = world.GetGravity();
             const b2Vec2 pos = ball->GetPosition();
-            float r = ball->GetAngle();
-            write(output, "ffff", t, pos.x, pos.y, r);
+            const b2Vec2 v = ball->GetLinearVelocity();
+            const float m = ball->GetMass();
+            const float k = 0.5*m*v.y*v.y;
+            const float pe = m*std::fabs(g.y)*pos.y;
+            
+            write(output, "dffff", t, pos.y, v.y, k, pe);
             if (showOutputInConsole)
-                printf("{t: %d, x: %.10f, y: %.10f, r: %.10f}\n", t, pos.x, pos.y, r);
+                printf("{t: %d, y: %.10f, vy: %.10f, k: %.10f, pe: %.10f}\n", t, pos.y,  v.y, k, pe);
         }
     }
 };
