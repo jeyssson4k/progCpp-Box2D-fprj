@@ -1,0 +1,8 @@
+x0  0.0
+y0  20.0
+d   1.0
+r   1.0
+fr  0.3
+radius  1.0
+xcenter 0.0
+ycenter 0.0
