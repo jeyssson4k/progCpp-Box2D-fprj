@@ -3,7 +3,7 @@
 int main(int argc, char **argv)
 {
     // Amount of params is OK
-    bool EXEC = validate_params(2, argc);
+    bool EXEC = validate_params(4, argc);
     if (!EXEC)
         return EXIT_FAILURE;
     // Paths are OK
@@ -11,6 +11,8 @@ int main(int argc, char **argv)
     if (!EXEC)
         return EXIT_FAILURE;
 
+    const int frames = std::atoi(argv[3]);
+    const bool showResults = (bool)std::atoi(argv[4]);
     // Restoring data from config files
     IParams wc = fetch(argv[1]), bc = fetch(argv[2]);
     Obj w, b0;
@@ -29,13 +31,13 @@ int main(int argc, char **argv)
 
     /* SimulationHandler handles the entire simulation (for loop)
     and params can be skipped (because of default values) */
-    SimulationHandler *sh = new SimulationHandler(1500);
+    SimulationHandler *sh = new SimulationHandler(frames);
     // Instance to write in file
     str r = std::to_string(bc["r"]);
     str path = str_concat(3, "s1_r-", r.c_str(), "_data.txt");
     printf("Path to save data: %s\n", path.c_str());
     std::ofstream outFile(path);
-    sh->Start(world, ball0->obj, outFile, false);
+    sh->Start(world, ball0->obj, outFile, showResults);
     outFile.close();
 
     return EXIT_SUCCESS;
